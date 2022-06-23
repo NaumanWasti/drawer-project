@@ -1,4 +1,7 @@
 #include <Keypad.h>
+#include <LiquidCrystal.h> // includes the LiquidCrystal Library 
+LiquidCrystal lcd(1, 2, 4, 5, 6, 7); // Creates an LCD object. Parameters: (rs, enable, d4, d5, d6, d7) 
+
 
 const byte ROWS = 4; //four rows
 const byte COLS = 4; //three columns
@@ -22,40 +25,45 @@ void printRandoms(int lower, int upper, int count)
 }
 
 void setup(){
-    pinMode(11,OUTPUT); //relay
+  lcd.begin(16,2);
+  pinMode(11,OUTPUT); //relay
   Serial.begin(9600);
 }
   
 void loop(){
-  Serial.println("enter 1 for lock and 2 to open lock");
+  lcd.print("1 for lock and 2 to unlock");  delay(3000);
   char key = keypad.getKey();
   
   if (key==1)
   {
-    Serial.println("which drawer you want to close?");
+    lcd.print("which drawer you want to close?");  delay(3000);
     char box = keypad.getKey();
     if (box==1){  digitalWrite(11,HIGH);  //Relay onn,locked
                   delay(500);
+                  lcd.print("draws 1 locked");  delay(1000);
                   password1=printRandoms(0, 9, 3);
-                  Serial.println("password is ",passsword1);
+                  lcd.print("password is ",passsword1);
                   delay(2000); }
 
      if (box==2){  digitalWrite(10,HIGH);  //Relay onn,locked
                   delay(500);
+                  lcd.print("draws 2 locked");  delay(1000);
                   password2=printRandoms(0, 9, 3);
-                  Serial.println("password is ",passsword2);
+                  lcd.print("password is ",passsword2);
                   delay(2000); }
                   
      if (box==3){  digitalWrite(9,HIGH);  //Relay onn,locked
                   delay(500);
+                  lcd.print("draws 3 locked");  delay(1000);
                   password3=printRandoms(0, 9, 3);
-                  Serial.println("password is ",passsword3);
+                  lcd.print("password is ",passsword3);
                   delay(2000); }
     
    if (box==4){  digitalWrite(8,HIGH);  //Relay onn,locked
                   delay(500);
+                  lcd.print("draws 4 locked");  delay(1000);
                   password4=printRandoms(0, 9, 3);
-                  Serial.println("password is ",passsword4);
+                  lcd.print("password is ",passsword4);
                   delay(2000); }
    }
 
@@ -67,47 +75,52 @@ void loop(){
       bool b=false;
       while (b!=true)
       {
-      Serial.println("whic box do you want to open?");
+      lcd.print("whic box do you want to open?"); delay(2000);
+
       char box2 = keypad.getKey();
       if (box2==1){ 
-             Serial.println("enter password");
+             lcd.print("enter password"); delay(1000);
              char pwd = keypad.getKey(); //get input password
              if (pwd==password1){ 
              digitalWrite(11,LOW);  //lock open
              delay(500);
+             lcd.print("draws 1 unlocked");  delay(1000);
              b=true;
              }}
-             Serial.println("wrong password,Try again");
+             lcd.print("wrong password,Try again"); delay(1000);
 
       if (box2==2){ 
-             Serial.println("enter password");
+             lcd.print("enter password");
              char pwd = keypad.getKey(); //get input password
              if (pwd==password2){ 
              digitalWrite(10,LOW);  //lock open
              delay(500);
              b=true;
+             lcd.print("draws 2 locked");  delay(1000);
              }}
-             Serial.println("wrong password,Try again");
+             lcd.print("wrong password,Try again"); delay(1000);
 
       if (box2==3){ 
-             Serial.println("enter password");
+             lcd.print("enter password");
              char pwd = keypad.getKey(); //get input password
              if (pwd==password3){ 
              digitalWrite(9,LOW);  //lock open
              delay(500);
              b=true;
+             lcd.print("draws 3 locked");  delay(1000);
              }}
-             Serial.println("wrong password,Try again");
+             lcd.print("wrong password,Try again"); delay(1000);
 
       if (box2==4){ 
-             Serial.println("enter password");
+             lcd.print("enter password");
              char pwd = keypad.getKey(); //get input password
              if (pwd==password8){ 
              digitalWrite(8,LOW);  //lock open
              delay(500);
              b=true;
+             lcd.print("draws 4 locked");  delay(1000);
              }}
-             Serial.println("wrong password,Try again");
+             lcd.print("wrong password,Try again"); delay(1000);
              
     }
       }
